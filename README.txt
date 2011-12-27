@@ -1,3 +1,5 @@
+Author: Ivan Vladimirov Ivanov (ivan.vladimirov.ivanov@gmail.com)
+
 This project implements a basic Multilayer Feedforward Neural Network
 and Naive Bayes classifier framework. The implementations are compared
 against each other on 3 generic data sets which can be found at:

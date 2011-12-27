@@ -80,22 +80,13 @@ public class BreastCancerExperiment {
     normalize(all);
 
     Collections.shuffle(all, new Random(42));
-    //System.out.println("Examples = " + trainingExamples);
-    // NB!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     for(int i = 0; i < trainingExamples; i++) {
       examples.add(all.get(i));
     }
     for(int i = DEFAULT_TRAINING_EXAMPLES; i < all.size(); i++) {
       validationSet.add(all.get(i));
     }
-    /*
-    for(int i = 0; i < all.size(); i++) {
-      examples.add(all.get(i));
-    }
-    for(int i = 0; i < all.size(); i++) {
-      validationSet.add(all.get(i));
-    }
-    */
+
     double percent =
         testClassifier(
             layers,
@@ -141,22 +132,6 @@ public class BreastCancerExperiment {
     return examples;
   }
 
-  private static void normalize(List <Example> examples) {
-    for(int i = 0; i < INPUTS; i++) {
-      double minValue = examples.get(0).getInput()[i];
-      double maxValue = examples.get(0).getInput()[i];
-      for(int j = 0; j < examples.size(); j++) {
-        minValue = Math.min(minValue, examples.get(j).getInput()[i]);
-        maxValue = Math.max(maxValue, examples.get(j).getInput()[i]);
-      }
-      for(int j = 0; j < examples.size(); j++) {
-        double value = examples.get(j).getInput()[i];
-        value = (value - minValue) / (maxValue - minValue);
-        examples.get(j).getInput()[i] = value;
-      }
-    }
-  }
-
   private static Example parseExample(String record) {
     String[] tokens = record.split(",");
     double[] input = new double[INPUTS];
@@ -171,13 +146,27 @@ public class BreastCancerExperiment {
   }
 
   private static int getMaxIndex(double[] x) {
-    //for(int i = 0; i < x.length; i++) System.out.print(x[i] + " ");
-    //System.out.println();
     int index = 0;
     for(int i = 0; i < x.length; i++) {
       if(x[i] > x[index]) index = i;
     }
     return index;
+  }
+
+  private static void normalize(List <Example> examples) {
+    for(int i = 0; i < INPUTS; i++) {
+      double minValue = examples.get(0).getInput()[i];
+      double maxValue = examples.get(0).getInput()[i];
+      for(int j = 0; j < examples.size(); j++) {
+        minValue = Math.min(minValue, examples.get(j).getInput()[i]);
+        maxValue = Math.max(maxValue, examples.get(j).getInput()[i]);
+      }
+      for(int j = 0; j < examples.size(); j++) {
+        double value = examples.get(j).getInput()[i];
+        value = (value - minValue) / (maxValue - minValue);
+        examples.get(j).getInput()[i] = value;
+      }
+    }
   }
 }
 

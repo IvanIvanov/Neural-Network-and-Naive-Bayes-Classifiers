@@ -80,21 +80,13 @@ public class WineExperiment {
     normalize(all);
 
     Collections.shuffle(all, new Random(42));
-    // NB!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     for(int i = 0; i < trainingExamples; i++) {
       examples.add(all.get(i));
     }
     for(int i = DEFAULT_TRAINING_EXAMPLES; i < all.size(); i++) {
       validationSet.add(all.get(i));
     }
-    /*
-    for(int i = 0; i < all.size(); i++) {
-      examples.add(all.get(i));
-    }
-    for(int i = 0; i < all.size(); i++) {
-      validationSet.add(all.get(i));
-    }
-    */
+
     double percent =
         testClassifier(
             layers,
@@ -127,34 +119,17 @@ public class WineExperiment {
   }
 
   private static List <Example> readFile(String filename) {
+    List <Example> examples = new ArrayList <Example> ();
     try {
-      List <Example> examples = new ArrayList <Example> ();
       Scanner sc = new Scanner(new FileInputStream(filename));
       while(sc.hasNextLine()) {
         examples.add(parseExample(sc.nextLine()));
       }
-      return examples;
     }
     catch(IOException e) {
       e.printStackTrace();
     }
-    return null;
-  }
-
-  private static void normalize(List <Example> examples) {
-    for(int i = 0; i < INPUTS; i++) {
-      double minValue = examples.get(0).getInput()[i];
-      double maxValue = examples.get(0).getInput()[i];
-      for(int j = 0; j < examples.size(); j++) {
-        minValue = Math.min(minValue, examples.get(j).getInput()[i]);
-        maxValue = Math.max(maxValue, examples.get(j).getInput()[i]);
-      }
-      for(int j = 0; j < examples.size(); j++) {
-        double value = examples.get(j).getInput()[i];
-        value = (value - minValue) / (maxValue - minValue);
-        examples.get(j).getInput()[i] = value;
-      }
-    }
+    return examples;
   }
 
   private static Example parseExample(String record) {
@@ -171,13 +146,27 @@ public class WineExperiment {
   }
 
   private static int getMaxIndex(double[] x) {
-    //for(int i = 0; i < x.length; i++) System.out.print(x[i] + " ");
-    //System.out.println();
     int index = 0;
     for(int i = 0; i < x.length; i++) {
       if(x[i] > x[index]) index = i;
     }
     return index;
+  }
+
+  private static void normalize(List <Example> examples) {
+    for(int i = 0; i < INPUTS; i++) {
+      double minValue = examples.get(0).getInput()[i];
+      double maxValue = examples.get(0).getInput()[i];
+      for(int j = 0; j < examples.size(); j++) {
+        minValue = Math.min(minValue, examples.get(j).getInput()[i]);
+        maxValue = Math.max(maxValue, examples.get(j).getInput()[i]);
+      }
+      for(int j = 0; j < examples.size(); j++) {
+        double value = examples.get(j).getInput()[i];
+        value = (value - minValue) / (maxValue - minValue);
+        examples.get(j).getInput()[i] = value;
+      }
+    }
   }
 }
 

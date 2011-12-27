@@ -44,7 +44,7 @@ public class AbaloneExperiment {
   }
 
   private static double testClassifier(List <Example> examples,
-                                     List <Example> validationSet) {
+                                       List <Example> validationSet) {
 
     NaiveBayesClassifier classifier = new NaiveBayesClassifier(examples);
 
@@ -53,7 +53,6 @@ public class AbaloneExperiment {
       String output = classifier.classify(
           example.getCategoricalInputs(),
           example.getContinuousInputs()).getValue();
-      //System.out.println(output);
       if(getClass(output) == getClass(example.getOutput().getValue())) {
         correct++;
       }

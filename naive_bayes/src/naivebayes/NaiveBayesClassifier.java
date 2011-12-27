@@ -28,8 +28,6 @@ public class NaiveBayesClassifier {
     for(String className : classes) {
       double classProbability = computeClassProbability(
           className, categoricalInputs, continuousInputs);
-   //   System.out.println(
-   //       "class = " + className + " prob = " + classProbability);
       if(classProbability > bestClassProbability) {
         bestClassProbability = classProbability;
         bestClass = className;
@@ -88,9 +86,6 @@ public class NaiveBayesClassifier {
     for(String output : uniqueOutputValues(examples)) {
       List <Example> filteredExamples = filterExamplesByOutput(
           examples, output);
-      //for(Example example : examples) {
-      //  System.out.println(example);
-      //}
       classProbabilityTable.put(
           output,
           (double) filteredExamples.size() / n);

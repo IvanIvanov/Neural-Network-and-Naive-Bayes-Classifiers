@@ -49,7 +49,6 @@ public class FeedforwardNeuralNetwork {
                     double learningRate,
                     double momentum) {
     while(iterations-- > 0) {
-      //System.out.println("#" + iterations + ": " + computeError(examples));
       for(Example example : examples) {
         forwardPropagate(example.getInput());
         backwardPropagateDelta(example.getOutput());

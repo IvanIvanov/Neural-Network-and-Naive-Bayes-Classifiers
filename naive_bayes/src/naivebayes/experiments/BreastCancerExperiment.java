@@ -60,7 +60,6 @@ public class BreastCancerExperiment {
       String output = classifier.classify(
           example.getCategoricalInputs(),
           example.getContinuousInputs()).getValue();
-      //System.out.println(output);
       if(output.equals(example.getOutput().getValue())) {
         correct++;
       }
